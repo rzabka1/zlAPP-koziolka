@@ -6,11 +6,19 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 540,
-        height: 960,
-	resizable: false,
-	frame: false,
-	alwaysOnTop: true,
+        width: 390,
+        height: 844,
+
+	    resizable: true,
+        minWidth: 320,
+        minHeight: 568,
+
+        center: true,
+
+        autoHideMenuBar: true,
+
+	    frame: false,
+	    alwaysOnTop: true,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
