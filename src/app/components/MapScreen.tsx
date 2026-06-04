@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import L from 'leaflet';
+import L, {DivIcon} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Box } from '@mui/material';
+import { RadioButtonChecked } from "@mui/icons-material";
 import Flag from '../icons/flag.svg'
 
 export default function MapScreen() {
@@ -51,6 +52,87 @@ export default function MapScreen() {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
+
+        // Find user's location
+        const onLocationFound = (e: L.LocationEvent) => {
+            const radius = e.accuracy;
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log('Latitude:', position.coords.latitude);
+                    console.log('Longitude:', position.coords.longitude);
+                },
+                (error) => {
+                    console.error('Geolocation error:', error);
+                },
+                {
+                    enableHighAccuracy: true,
+                }
+            );
+
+            L.marker(e.latlng)
+                .addTo(map)
+                .bindPopup(
+                    `You are within ${Math.round(radius)} meters from this point`
+                )
+                .openPopup();
+
+            L.circle(e.latlng, {
+                radius,
+                color: '#4285F4',
+                fillColor: '#4285F4',
+                fillOpacity: 0.15,
+            }).addTo(map);
+
+            // Optional: center map on user
+            map.setView(e.latlng, 17);
+        };
+
+        const onLocationError = (e: L.ErrorEvent) => {
+            console.error('Location error:', e.message);
+        };
+
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+
+        // Request location
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const latlng = {
+                    lat: pos.coords.latitude,
+                    lng: pos.coords.longitude,
+                };
+
+                const userLocationIcon = L.divIcon({
+                    html: renderToStaticMarkup(
+                        <RadioButtonChecked style={{ color: '#4285F4', fontSize: 32 }} />
+                    ),
+                    className: '',
+                    iconSize: [32, 32],
+                    iconAnchor: [16, 16],
+                });
+
+                L.marker(latlng, {icon: userLocationIcon})
+                    .addTo(map)
+
+                L.circle(latlng, {
+                    radius: pos.coords.accuracy,
+                    color: '#4285F4',
+                    fillColor: '#4285F4',
+                    fillOpacity: 0.15,
+                }).addTo(map);
+
+                map.setView(latlng, 17);
+            },
+            (err) => {
+                console.error("Geolocation failed:", err);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+            }
+        );
 
         // Add marker
         const customIcon = new L.DivIcon({

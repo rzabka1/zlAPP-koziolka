@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, session} = require('electron');
 const path = require('path');
 
 let mainWindow;
@@ -19,7 +19,7 @@ function createWindow() {
     frame: false,
     alwaysOnTop: true,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.cjs'),
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
@@ -39,6 +39,15 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  session.defaultSession.setPermissionRequestHandler(
+      (webContents, permission, callback) => {
+        if (permission === 'geolocation') {
+          callback(true);
+        } else {
+          callback(false);
+        }
+      }
+  );
   createWindow();
 
   app.on('activate', () => {
