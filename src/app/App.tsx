@@ -8,7 +8,7 @@ import GalleryScreen from './components/GalleryScreen';
 import LeaderboardScreen from './components/LeaderboardScreen';
 import SettingsScreen from './components/SettingsScreen';
 
-const theme = createTheme({
+const greenTheme = createTheme({
     palette: {
         primary: {
             main: '#81c784',
@@ -50,6 +50,48 @@ const theme = createTheme({
     },
 });
 
+const redTheme = createTheme({
+    palette: {
+        primary: {
+            main: '#c78181',
+            light: '#d6a5a5',
+            dark: '#bb6666',
+            contrastText: '#5e1b1b',
+        },
+        background: {
+            default: '#f1f8f4',
+            paper: '#ffffff',
+        },
+        text: {
+            primary: '#5e1b1b',
+            secondary: '#af4c4c',
+        },
+    },
+    shape: {
+        borderRadius: 16,
+    },
+    components: {
+        MuiBottomNavigation: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#ffffff',
+                    borderTop: '1px solid #c8e6c9',
+                },
+            },
+        },
+        MuiBottomNavigationAction: {
+            styleOverrides: {
+                root: {
+                    color: '#c78181',
+                    '&.Mui-selected': {
+                        color: '#7d2e2e',
+                    },
+                },
+            },
+        },
+    },
+});
+
 export default function App(props: any) {
     const [currentTab, setCurrentTab] = useState(0);
     const [counter, setCounter] = useState(20);
@@ -63,7 +105,7 @@ export default function App(props: any) {
 
     return (
         <div {...props} style={{ height: '100%', width: '100%' }}>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={greenTheme}>
                 <CssBaseline />
                 <Box
                     sx={{
