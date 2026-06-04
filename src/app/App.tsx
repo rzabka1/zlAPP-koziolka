@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BottomNavigation, BottomNavigationAction, AppBar, Toolbar, IconButton, Chip, Box, CssBaseline } from '@mui/material';
-import { Map, Stars, People, Settings, Sync, Accessibility } from '@mui/icons-material';
+import { Map, People, Settings, Sync, Accessibility } from '@mui/icons-material';
 import Points from './icons/points.svg';
+import Goat from './icons/goat.svg';
 import MapScreen from './components/MapScreen';
 import GalleryScreen from './components/GalleryScreen';
 import LeaderboardScreen from './components/LeaderboardScreen';
@@ -37,10 +38,18 @@ const greenTheme = createTheme({
                 },
             },
         },
+
         MuiBottomNavigationAction: {
             styleOverrides: {
                 root: {
                     color: '#81c784',
+
+                    '& svg': {
+                        color: 'inherit',
+                        fill: 'currentColor',
+                        // stroke: 'currentColor',
+                    },
+
                     '&.Mui-selected': {
                         color: '#2e7d32',
                     },
@@ -99,7 +108,7 @@ export default function App(props: any) {
     const screens = [
         <MapScreen key="map" />,
         <GalleryScreen key="gallery" />,
-        <LeaderboardScreen key="empty" />,
+        <LeaderboardScreen key="leaderboard" />,
         <SettingsScreen key="settings" />,
     ];
 
@@ -164,7 +173,7 @@ export default function App(props: any) {
                         }}
                     >
                         <BottomNavigationAction icon={<Map />} />
-                        <BottomNavigationAction icon={<Stars />} />
+                        <BottomNavigationAction icon={<Goat style={{width: '24'}} />} />
                         <BottomNavigationAction icon={<People />} />
                         <BottomNavigationAction icon={<Settings />} />
                     </BottomNavigation>
