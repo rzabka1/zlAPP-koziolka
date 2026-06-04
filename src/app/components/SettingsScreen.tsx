@@ -1,4 +1,4 @@
-import { Box, List, ListItem, ListItemIcon, ListItemText, Switch, Divider, Paper, Typography } from '@mui/material';
+import { Box, List, ListItem, ListItemIcon, ListItemText, ListItemButton, Switch, Divider, Paper, Typography } from '@mui/material';
 import { Palette, Notifications, Language, Help, Info } from '@mui/icons-material';
 import { useState } from 'react';
 
@@ -16,7 +16,7 @@ export default function SettingsScreen() {
       }}
     >
       <Typography variant="h5" color="text.primary" sx={{ mb: 2, px: 1 }}>
-        Settings
+        Ustawienia
       </Typography>
 
       <Paper elevation={1} sx={{ mb: 2, borderRadius: 2, overflow: 'hidden' }}>
@@ -71,34 +71,40 @@ export default function SettingsScreen() {
 
       <Paper elevation={1} sx={{ borderRadius: 2, overflow: 'hidden' }}>
         <List sx={{ py: 0 }}>
-          <ListItem key="language">
-            <ListItemIcon>
-              <Language sx={{ color: '#66bb6a' }} />
-            </ListItemIcon>
-            <ListItemText
-              primary="Język"
-              secondary="Polski"
-            />
+          <ListItem key="language" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Language sx={{ color: '#66bb6a' }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Język"
+                secondary="Polski"
+              />
+            </ListItemButton>
           </ListItem>
           <Divider key="divider-2" />
-          <ListItem key="help">
-            <ListItemIcon>
-              <Help sx={{ color: '#66bb6a' }} />
-            </ListItemIcon>
-            <ListItemText
-              primary="Pomoc"
-              secondary="Uzyskaj pomoc w aplikacji"
-            />
+          <ListItem key="help" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Help sx={{ color: '#66bb6a' }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="Pomoc"
+                secondary="Uzyskaj pomoc w aplikacji"
+              />
+            </ListItemButton>
           </ListItem>
           <Divider key="divider-3" />
-          <ListItem key="about">
-            <ListItemIcon>
-              <Info sx={{ color: '#66bb6a' }} />
-            </ListItemIcon>
-            <ListItemText
-              primary="O aplikacji"
-              secondary="Wersja 1.0.0"
-            />
+          <ListItem key="about" disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Info sx={{ color: '#66bb6a' }} />
+              </ListItemIcon>
+              <ListItemText
+                primary="O aplikacji"
+                secondary="Wersja 1.0.0"
+              />
+            </ListItemButton>
           </ListItem>
         </List>
       </Paper>
