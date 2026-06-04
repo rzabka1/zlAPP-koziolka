@@ -1,64 +1,59 @@
-import { Box, Paper, Typography } from '@mui/material';
-import { Place, MyLocation } from '@mui/icons-material';
+import { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { Box } from '@mui/material';
 
 export default function MapScreen() {
-  return (
-    <Box
-      sx={{
-        height: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        bgcolor: '#e8f5e9',
-        position: 'relative',
-      }}
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(to right, #c8e6c9 1px, transparent 1px),
-            linear-gradient(to bottom, #c8e6c9 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-          opacity: 0.3,
-        }}
-      />
+    const mapRef = useRef<HTMLDivElement>(null);
+    const mapInstanceRef = useRef<L.Map | null>(null);
 
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          textAlign: 'center',
-          bgcolor: 'white',
-          borderRadius: 3,
-          zIndex: 1,
-        }}
-      >
-        <Place sx={{ fontSize: 64, color: '#2e7d32', mb: 2 }} />
-        <Typography variant="h5" color="text.primary" gutterBottom>
-          Widok Mapy
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Włącz lokalizację w telefonie
-        </Typography>
+    useEffect(() => {
+        if (!mapRef.current || mapInstanceRef.current) return;
 
+        // Lublin, Poland coordinates
+        const lublinPosition: [number, number] = [51.2465, 22.5684];
+
+        // Initialize map
+        const map = L.map(mapRef.current).setView(lublinPosition, 13);
+        mapInstanceRef.current = map;
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        // Add marker
+        const customIcon = L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+            iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41],
+        });
+
+        L.marker(lublinPosition, { icon: customIcon })
+            .addTo(map)
+            .bindPopup('Lublin, Poland');
+
+        // Cleanup
+        return () => {
+            if (mapInstanceRef.current) {
+                mapInstanceRef.current.remove();
+                mapInstanceRef.current = null;
+            }
+        };
+    }, []);
+
+    return (
         <Box
-          sx={{
-            mt: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 1,
-          }}
-        >
-          <MyLocation sx={{ fontSize: 20, color: '#66bb6a' }} />
-          <Typography variant="caption" color="text.secondary">
-            Ładowanie lokalizacji...
-          </Typography>
-        </Box>
-      </Paper>
-    </Box>
-  );
+            ref={mapRef}
+            sx={{
+                height: '100%',
+                width: '100%',
+                position: 'relative',
+            }}
+        />
+    );
 }
