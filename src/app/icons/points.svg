@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+        viewBox="0 0 14.704714 19.079403"
+        version="1.1"
+        id="svg1"
+        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg">
+  <defs id="defs1">
+    <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF4C1F" />
+      <stop offset="100%" stop-color="#FFA200" />
+    </linearGradient>
+  </defs>
+  <g
+          inkscape:label="Layer 1"
+          inkscape:groupmode="layer"
+          id="layer1"
+          transform="translate(-2.5440269,-1.6301872)">
+    <path
+            style="fill:none;fill-opacity:1;stroke:url(#gradient);stroke-width:4.16884;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+            d="M 9.7563591,3.7144447 4.6284023,11.468563 9.7563591,18.625314 15.16437,11.468563 Z"
+            id="path1"
+            sodipodi:nodetypes="ccccc" />
+  </g>
+</svg>
