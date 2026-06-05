@@ -8,6 +8,7 @@ import MapScreen from './components/MapScreen';
 import GalleryScreen from './components/GalleryScreen';
 import LeaderboardScreen from './components/LeaderboardScreen';
 import SettingsScreen from './components/SettingsScreen';
+import GoatDescriptionScreen from './components/GoatDescriptionScreen';
 
 const greenTheme = createTheme({
     palette: {
@@ -102,15 +103,16 @@ const redTheme = createTheme({
 });
 
 export default function App(props: any) {
-    const [currentTab, setCurrentTab] = useState(0);
+    const [currentTab, setCurrentTab] = useState<'map' | 'gallery' | 'leaderboard' | 'settings' | 'goat'>('map');
+    const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
     const [counter, setCounter] = useState(20);
 
-    const screens = [
-        <MapScreen key="map" />,
-        <GalleryScreen key="gallery" />,
-        <LeaderboardScreen key="leaderboard" />,
-        <SettingsScreen key="settings" />,
-    ];
+    // const screens = [
+    //     <MapScreen key="map" />,
+    //     <GalleryScreen key="gallery" />,
+    //     <LeaderboardScreen key="leaderboard" />,
+    //     <SettingsScreen key="settings" />,
+    // ];
 
     return (
         <div {...props} style={{ height: '100%', width: '100%' }}>
@@ -156,7 +158,27 @@ export default function App(props: any) {
                             position: 'relative',
                         }}
                     >
-                        {screens[currentTab]}
+                        {currentTab === 'map' && (
+                            <MapScreen
+                                onGoatClick={(goat) => {
+                                    setSelectedGoat(goat);
+                                    setCurrentTab('goat');
+                                }}
+                            />
+                        )}
+
+                        {currentTab === 'gallery' && <GalleryScreen />}
+
+                        {currentTab === 'leaderboard' && <LeaderboardScreen />}
+
+                        {currentTab === 'settings' && <SettingsScreen />}
+
+                        {currentTab === 'goat' && (
+                            <GoatDescriptionScreen
+                                goat={selectedGoat}
+                                onBack={() => setCurrentTab('map')}
+                            />
+                        )}
                     </Box>
 
                     <BottomNavigation
