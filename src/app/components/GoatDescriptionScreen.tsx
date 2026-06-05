@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, CardMedia, } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Goat } from '../data/goats';
 
@@ -32,6 +32,17 @@ export default function GoatDescriptionScreen({goat, onBack,}: Props) {
             >
                 {goat.name}
             </Typography>
+
+            <CardMedia
+                component="img"
+                image={goat.photo}
+                alt={goat.name}
+                sx={{
+                    height: '50%',
+                    borderRadius: 1,
+                    mb: 1,
+                }}
+            />
 
             <Typography
                 variant="body1"
