@@ -1,6 +1,23 @@
-import { Box, List, ListItem, ListItemIcon, ListItemText, ListItemButton, Switch, Divider, Paper, Typography } from '@mui/material';
-import { Palette, Notifications, Language, Help, Info } from '@mui/icons-material';
-import { useState } from 'react';
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+  Switch,
+  Divider,
+  Paper,
+  Typography,
+} from "@mui/material";
+import {
+  Palette,
+  Notifications,
+  Language,
+  Help,
+  Info,
+} from "@mui/icons-material";
+import { useState } from "react";
 
 export default function SettingsScreen() {
   const [notifications, setNotifications] = useState(true);
@@ -9,9 +26,9 @@ export default function SettingsScreen() {
   return (
     <Box
       sx={{
-        height: '100%',
-        overflow: 'auto',
-        bgcolor: 'background.default',
+        height: "100%",
+        overflow: "auto",
+        bgcolor: "background.default",
         p: 2,
       }}
     >
@@ -19,11 +36,11 @@ export default function SettingsScreen() {
         Ustawienia
       </Typography>
 
-      <Paper elevation={1} sx={{ mb: 2, borderRadius: 2, overflow: 'hidden' }}>
+      <Paper elevation={1} sx={{ mb: 2, borderRadius: 2, overflow: "hidden" }}>
         <List sx={{ py: 0 }}>
           <ListItem key="notifications">
             <ListItemIcon>
-              <Notifications sx={{ color: '#66bb6a' }} />
+              <Notifications sx={{ color: "#66bb6a" }} />
             </ListItemIcon>
             <ListItemText
               primary="Powiadomienia"
@@ -34,11 +51,11 @@ export default function SettingsScreen() {
               checked={notifications}
               onChange={(e) => setNotifications(e.target.checked)}
               sx={{
-                '& .MuiSwitch-switchBase.Mui-checked': {
-                  color: '#66bb6a',
+                "& .MuiSwitch-switchBase.Mui-checked": {
+                  color: "#66bb6a",
                 },
-                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                  backgroundColor: '#81c784',
+                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                  backgroundColor: "#81c784",
                 },
               }}
             />
@@ -46,7 +63,7 @@ export default function SettingsScreen() {
           <Divider key="divider-1" />
           <ListItem key="darkmode">
             <ListItemIcon>
-              <Palette sx={{ color: '#66bb6a' }} />
+              <Palette sx={{ color: "#66bb6a" }} />
             </ListItemIcon>
             <ListItemText
               primary="Tryb ciemny"
@@ -57,11 +74,11 @@ export default function SettingsScreen() {
               checked={darkMode}
               onChange={(e) => setDarkMode(e.target.checked)}
               sx={{
-                '& .MuiSwitch-switchBase.Mui-checked': {
-                  color: '#66bb6a',
+                "& .MuiSwitch-switchBase.Mui-checked": {
+                  color: "#66bb6a",
                 },
-                '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-                  backgroundColor: '#81c784',
+                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                  backgroundColor: "#81c784",
                 },
               }}
             />
@@ -69,24 +86,21 @@ export default function SettingsScreen() {
         </List>
       </Paper>
 
-      <Paper elevation={1} sx={{ borderRadius: 2, overflow: 'hidden' }}>
+      <Paper elevation={1} sx={{ borderRadius: 2, overflow: "hidden" }}>
         <List sx={{ py: 0 }}>
           <ListItem key="language" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Language sx={{ color: '#66bb6a' }} />
+                <Language sx={{ color: "#66bb6a" }} />
               </ListItemIcon>
-              <ListItemText
-                primary="Język"
-                secondary="Polski"
-              />
+              <ListItemText primary="Język" secondary="Polski" />
             </ListItemButton>
           </ListItem>
           <Divider key="divider-2" />
           <ListItem key="help" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Help sx={{ color: '#66bb6a' }} />
+                <Help sx={{ color: "#66bb6a" }} />
               </ListItemIcon>
               <ListItemText
                 primary="Pomoc"
@@ -98,12 +112,9 @@ export default function SettingsScreen() {
           <ListItem key="about" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Info sx={{ color: '#66bb6a' }} />
+                <Info sx={{ color: "#66bb6a" }} />
               </ListItemIcon>
-              <ListItemText
-                primary="O aplikacji"
-                secondary="Wersja 1.0.0"
-              />
+              <ListItemText primary="O aplikacji" secondary="Wersja 1.0.0" />
             </ListItemButton>
           </ListItem>
         </List>

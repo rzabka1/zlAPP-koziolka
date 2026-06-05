@@ -1,4 +1,4 @@
 packages:
-  - '.'
+  - "."
 minimumReleaseAgeExclude:
   - electron@42.3.2

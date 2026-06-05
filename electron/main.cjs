@@ -1,5 +1,5 @@
-const { app, BrowserWindow, session} = require('electron');
-const path = require('path');
+const { app, BrowserWindow, session } = require("electron");
+const path = require("path");
 
 let mainWindow;
 
@@ -19,7 +19,7 @@ function createWindow() {
     frame: false,
     alwaysOnTop: true,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.cjs'),
+      preload: path.join(__dirname, "preload.cjs"),
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
@@ -27,38 +27,38 @@ function createWindow() {
     show: false,
   });
 
-  mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+  mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
 
-  mainWindow.once('ready-to-show', () => {
+  mainWindow.once("ready-to-show", () => {
     mainWindow.show();
   });
 
-  mainWindow.on('closed', () => {
+  mainWindow.on("closed", () => {
     mainWindow = null;
   });
 }
 
 app.whenReady().then(() => {
   session.defaultSession.setPermissionRequestHandler(
-      (webContents, permission, callback) => {
-        if (permission === 'geolocation') {
-          callback(true);
-        } else {
-          callback(false);
-        }
+    (webContents, permission, callback) => {
+      if (permission === "geolocation") {
+        callback(true);
+      } else {
+        callback(false);
       }
+    },
   );
   createWindow();
 
-  app.on('activate', () => {
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
   });
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });

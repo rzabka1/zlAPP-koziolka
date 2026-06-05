@@ -1,17 +1,17 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  mode: 'development',
-  entry: './src/index.tsx',
-  target: 'web',
-  devtool: 'source-map',
+  mode: "development",
+  entry: "./src/index.tsx",
+  target: "web",
+  devtool: "source-map",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css', '.d.ts'],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".css", ".d.ts"],
   },
   module: {
     rules: [
@@ -19,32 +19,32 @@ module.exports = {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             presets: [
-              ['@babel/preset-react', { "runtime": "automatic" }],
-              '@babel/preset-typescript',
+              ["@babel/preset-react", { runtime: "automatic" }],
+              "@babel/preset-typescript",
             ],
           },
         },
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack']
+        use: ["@svgr/webpack"],
       },
       {
         test: /\.(png|jpe?g|gif|webp|mp3|wav|ogg|m4a)$/i,
-        type: 'asset/resource',
+        type: "asset/resource",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: "./index.html",
     }),
   ],
 };
