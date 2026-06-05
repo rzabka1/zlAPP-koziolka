@@ -103,7 +103,7 @@ const redTheme = createTheme({
 });
 
 export default function App(props: any) {
-    const [currentTab, setCurrentTab] = useState<'map' | 'gallery' | 'leaderboard' | 'settings' | 'goat'>('map');
+    const [currentTab, setCurrentTab] = useState<'map' | 'gallery' | 'leaderboard' | 'settings'>('map');
     const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
     const [counter, setCounter] = useState(20);
 
@@ -158,26 +158,25 @@ export default function App(props: any) {
                             position: 'relative',
                         }}
                     >
-                        {currentTab === 'map' && (
-                            <MapScreen
-                                onGoatClick={(goat) => {
-                                    setSelectedGoat(goat);
-                                    setCurrentTab('goat');
-                                }}
-                            />
-                        )}
-
-                        {currentTab === 'gallery' && <GalleryScreen />}
-
-                        {currentTab === 'leaderboard' && <LeaderboardScreen />}
-
-                        {currentTab === 'settings' && <SettingsScreen />}
-
-                        {currentTab === 'goat' && (
+                        {selectedGoat ? (
                             <GoatDescriptionScreen
                                 goat={selectedGoat}
-                                onBack={() => setCurrentTab('map')}
+                                onBack={() => setSelectedGoat(null)}
                             />
+                        ) : (
+                            <>
+                                {currentTab === 'map' && (
+                                    <MapScreen
+                                        onGoatClick={(goat) => {
+                                            setSelectedGoat(goat);
+                                        }}
+                                    />
+                                )}
+
+                                {currentTab === 'gallery' && <GalleryScreen />}
+                                {currentTab === 'leaderboard' && <LeaderboardScreen />}
+                                {currentTab === 'settings' && <SettingsScreen />}
+                            </>
                         )}
                     </Box>
 
@@ -194,10 +193,10 @@ export default function App(props: any) {
                             boxShadow: '0 -2px 8px rgba(0,0,0,0.1)',
                         }}
                     >
-                        <BottomNavigationAction icon={<Map />} />
-                        <BottomNavigationAction icon={<Goat style={{width: '24'}} />} />
-                        <BottomNavigationAction icon={<People />} />
-                        <BottomNavigationAction icon={<Settings />} />
+                        <BottomNavigationAction value={'map'} icon={<Map />} />
+                        <BottomNavigationAction value={'gallery'} icon={<Goat style={{width: '24'}} />} />
+                        <BottomNavigationAction value={'leaderboard'} icon={<People />} />
+                        <BottomNavigationAction value={'settings'} icon={<Settings />} />
                     </BottomNavigation>
                 </Box>
             </ThemeProvider>
