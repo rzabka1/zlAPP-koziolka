@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BottomNavigation, BottomNavigationAction, AppBar, Toolbar, IconButton, Chip, Box, CssBaseline } from '@mui/material';
 import { Map, People, Settings, Sync, Accessibility } from '@mui/icons-material';
@@ -10,6 +10,8 @@ import LeaderboardScreen from './components/LeaderboardScreen';
 import SettingsScreen from './components/SettingsScreen';
 import GoatDescriptionScreen from './components/GoatDescriptionScreen';
 import GoatPreviewCard from './components/GoatPreviewCard';
+import { StatusBar } from '@capacitor/status-bar';
+import { Capacitor } from '@capacitor/core';
 
 const greenTheme = createTheme({
     palette: {
@@ -108,6 +110,12 @@ export default function App(props: any) {
     const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
     const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
     const [counter, setCounter] = useState(20);
+
+    useEffect(() => {
+        if (Capacitor.isNativePlatform()) {
+            StatusBar.hide().catch(console.error);
+        }
+     }, []);
 
     return (
         <div {...props} style={{ height: '100%', width: '100%' }}>
