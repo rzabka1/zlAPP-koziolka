@@ -1,13 +1,19 @@
 import { useEffect, useRef } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import L, {DivIcon} from 'leaflet';
+// @ts-ignore
 import 'leaflet/dist/leaflet.css';
 import { Box } from '@mui/material';
 import { RadioButtonChecked } from "@mui/icons-material";
 import Flag from '../icons/flag.svg'
 import {goats, Goat} from "../data/goats";
 
-export default function MapScreen({onGoatClick,}: {onGoatClick?: (goat:Goat) => void;}) {
+interface Props {
+    onGoatClick: (goat: Goat) => void;
+    onMapClick: () => void;
+}
+
+export default function MapScreen({onGoatClick, onMapClick}: {onGoatClick?: (goat:Goat) => void; onMapClick?: () => void;}) {
     const mapRef = useRef<HTMLDivElement>(null);
     const mapInstanceRef = useRef<L.Map | null>(null);
 
@@ -67,6 +73,10 @@ export default function MapScreen({onGoatClick,}: {onGoatClick?: (goat:Goat) => 
 
         map.on('locationfound', onLocationFound);
         map.on('locationerror', onLocationError);
+
+        map.on('click', () => {
+            onMapClick();
+        });
 
         // Request location
         navigator.geolocation.getCurrentPosition(

@@ -9,6 +9,7 @@ import GalleryScreen from './components/GalleryScreen';
 import LeaderboardScreen from './components/LeaderboardScreen';
 import SettingsScreen from './components/SettingsScreen';
 import GoatDescriptionScreen from './components/GoatDescriptionScreen';
+import GoatPreviewCard from './components/GoatPreviewCard';
 
 const greenTheme = createTheme({
     palette: {
@@ -105,14 +106,8 @@ const redTheme = createTheme({
 export default function App(props: any) {
     const [currentTab, setCurrentTab] = useState<'map' | 'gallery' | 'leaderboard' | 'settings'>('map');
     const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
+    const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
     const [counter, setCounter] = useState(20);
-
-    // const screens = [
-    //     <MapScreen key="map" />,
-    //     <GalleryScreen key="gallery" />,
-    //     <LeaderboardScreen key="leaderboard" />,
-    //     <SettingsScreen key="settings" />,
-    // ];
 
     return (
         <div {...props} style={{ height: '100%', width: '100%' }}>
@@ -168,14 +163,25 @@ export default function App(props: any) {
                                 {currentTab === 'map' && (
                                     <MapScreen
                                         onGoatClick={(goat) => {
-                                            setSelectedGoat(goat);
+                                            setPreviewGoat(goat);
                                         }}
+                                        onMapClick={() => setPreviewGoat(null)}
                                     />
                                 )}
 
                                 {currentTab === 'gallery' && <GalleryScreen />}
                                 {currentTab === 'leaderboard' && <LeaderboardScreen />}
                                 {currentTab === 'settings' && <SettingsScreen />}
+
+                                {previewGoat && (
+                                    <GoatPreviewCard
+                                        goat={previewGoat}
+                                        onOpen={() => {
+                                            setSelectedGoat(previewGoat);
+                                            setPreviewGoat(null);
+                                        }}
+                                    />
+                                )}
                             </>
                         )}
                     </Box>
@@ -184,6 +190,7 @@ export default function App(props: any) {
                         value={currentTab}
                         onChange={(event, newValue) => {
                             setCurrentTab(newValue);
+                            setPreviewGoat(null);
                         }}
                         showLabels={false}
                         sx={{
