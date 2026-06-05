@@ -169,7 +169,7 @@ export default function App(props: any) {
                                     />
                                 )}
 
-                                {currentTab === 'gallery' && <GalleryScreen />}
+                                {currentTab === 'gallery' && <GalleryScreen /> }
                                 {currentTab === 'leaderboard' && <LeaderboardScreen />}
                                 {currentTab === 'settings' && <SettingsScreen />}
 
