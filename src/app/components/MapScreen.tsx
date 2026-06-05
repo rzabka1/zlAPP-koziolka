@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import L, {DivIcon} from 'leaflet';
+import { Geolocation } from '@capacitor/geolocation';
 // @ts-ignore
 import 'leaflet/dist/leaflet.css';
 import { Box } from '@mui/material';
@@ -24,7 +25,13 @@ export default function MapScreen({onGoatClick, onMapClick}: {onGoatClick?: (goa
         const lublinPosition: [number, number] = [51.247690, 22.568603];
 
         // Initialize map
-        const map = L.map(mapRef.current).setView(lublinPosition, 19);
+        const map = L.map(mapRef.current, {
+            minZoom: 12,
+            maxBounds: [
+                [51.10, 22.30],
+                [51.35, 22.75]
+            ]
+        }).setView(lublinPosition, 19);
         mapInstanceRef.current = map;
 
         // Add OpenStreetMap tiles
@@ -36,18 +43,14 @@ export default function MapScreen({onGoatClick, onMapClick}: {onGoatClick?: (goa
         const onLocationFound = (e: L.LocationEvent) => {
             const radius = e.accuracy;
 
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
+            Geolocation.getCurrentPosition({ enableHighAccuracy: true })
+                .then((position) => {
                     console.log('Latitude:', position.coords.latitude);
                     console.log('Longitude:', position.coords.longitude);
-                },
-                (error) => {
+                })
+                .catch((error) => {
                     console.error('Geolocation error:', error);
-                },
-                {
-                    enableHighAccuracy: true,
-                }
-            );
+                });
 
             L.marker(e.latlng)
                 .addTo(map)
@@ -79,8 +82,12 @@ export default function MapScreen({onGoatClick, onMapClick}: {onGoatClick?: (goa
         });
 
         // Request location
-        navigator.geolocation.getCurrentPosition(
-            (pos) => {
+        Geolocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+        })
+            .then((pos) => {
                 const latlng = {
                     lat: pos.coords.latitude,
                     lng: pos.coords.longitude,
@@ -106,16 +113,10 @@ export default function MapScreen({onGoatClick, onMapClick}: {onGoatClick?: (goa
                 }).addTo(map);
 
                 map.setView(latlng, 17);
-            },
-            (err) => {
+            })
+            .catch((err) => {
                 console.error("Geolocation failed:", err);
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0,
-            }
-        );
+            });
 
         // Add marker
         const customIcon = new L.DivIcon({

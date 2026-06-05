@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   entry: './src/index.tsx',
-  target: 'electron-renderer',
+  target: 'web',
   devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
