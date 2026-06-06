@@ -135,7 +135,7 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
               p: 2,
             }}
           >
-            <LocationOn sx={{ color: "#66bb6a", fontSize: 24 }} />
+            <LocationOn sx={{ color: "palette.primary.dark", fontSize: 24 }} />
             <Typography variant="body1" color="text.primary">
               {goat.address}
             </Typography>
@@ -149,7 +149,7 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
               p: 2,
             }}
           >
-            <CallSplit sx={{ color: "#66bb6a", fontSize: 24 }} />
+            <CallSplit sx={{ color: "palette.primary.dark", fontSize: 24 }} />
             <Typography variant="body1" color="text.primary">
               (dystans)
             </Typography>
@@ -164,11 +164,11 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
             flex: 1,
             height: 48,
             mb: 3,
-            bgcolor: "#66bb6a",
-            "&:hover": { bgcolor: "#4caf50" },
+            bgcolor: "palette.primary.dark",
+            "&:hover": { bgcolor: "text.secondary", color: "primary.light" },
             borderRadius: 0.5,
             fontWeight: "bold",
-            color: "#c54000",
+            color: "secondary.main",
             fontSize: "1.4rem",
             display: "flex",
             alignItems: "center",
@@ -202,9 +202,9 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
           <IconButton
             onClick={togglePlayback}
             sx={{
-              bgcolor: "#66bb6a",
+              bgcolor: "text.primary",
               color: "white",
-              "&:hover": { bgcolor: "#4caf50" },
+              "&:hover": { bgcolor: "text.secondary" },
             }}
           >
             {isPlaying ? <Pause /> : <PlayArrow />}
@@ -228,9 +228,9 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
             sx={{
               height: "6px",
               borderRadius: 1,
-              bgcolor: "#e8f5e9",
+              bgcolor: "background.default",
               "& .MuiLinearProgress-bar": {
-                bgcolor: "#66bb6a",
+                bgcolor: "palette.primary.dark",
                 borderRadius: 1,
               },
             }}

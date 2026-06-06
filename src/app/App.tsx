@@ -36,6 +36,9 @@ const greenTheme = createTheme({
       dark: "#66bb6a",
       contrastText: "#1b5e20",
     },
+    secondary: {
+      main: "#d34a00",
+    },
     background: {
       default: "#f1f8f4",
       paper: "#ffffff",
@@ -66,7 +69,6 @@ const greenTheme = createTheme({
           "& svg": {
             color: "inherit",
             fill: "currentColor",
-            // stroke: 'currentColor',
           },
 
           "&.Mui-selected": {
@@ -81,38 +83,48 @@ const greenTheme = createTheme({
 const redTheme = createTheme({
   palette: {
     primary: {
-      main: "#c78181",
-      light: "#d6a5a5",
-      dark: "#bb6666",
-      contrastText: "#5e1b1b",
+      main: "#e57373",
+      light: "#ffbcbc",
+      dark: "#d74646",
+      contrastText: "#570021",
     },
+
+    secondary: {
+      main: "#b20000",
+    },
+
     background: {
-      default: "#f1f8f4",
+      default: "#fff5f5",
       paper: "#ffffff",
     },
+
     text: {
-      primary: "#5e1b1b",
-      secondary: "#af4c4c",
+      primary: "#4a1c1c",
+      secondary: "#8b3a3a",
     },
   },
+
   shape: {
     borderRadius: 16,
   },
+
   components: {
     MuiBottomNavigation: {
       styleOverrides: {
         root: {
           backgroundColor: "#ffffff",
-          borderTop: "1px solid #c8e6c9",
+          borderTop: "1px solid #f0caca",
         },
       },
     },
+
     MuiBottomNavigationAction: {
       styleOverrides: {
         root: {
-          color: "#c78181",
+          color: "#e57373",
+
           "&.Mui-selected": {
-            color: "#7d2e2e",
+            color: "#c62828",
           },
         },
       },

@@ -40,7 +40,7 @@ export default function SettingsScreen() {
         <List sx={{ py: 0 }}>
           <ListItem key="notifications">
             <ListItemIcon>
-              <Notifications sx={{ color: "#66bb6a" }} />
+              <Notifications sx={{ color: "primary.dark" }} />
             </ListItemIcon>
             <ListItemText
               primary="Powiadomienia"
@@ -52,10 +52,10 @@ export default function SettingsScreen() {
               onChange={(e) => setNotifications(e.target.checked)}
               sx={{
                 "& .MuiSwitch-switchBase.Mui-checked": {
-                  color: "#66bb6a",
+                  color: "primary.dark",
                 },
                 "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                  backgroundColor: "#81c784",
+                  backgroundColor: "primary.main",
                 },
               }}
             />
@@ -63,7 +63,7 @@ export default function SettingsScreen() {
           <Divider key="divider-1" />
           <ListItem key="darkmode">
             <ListItemIcon>
-              <Palette sx={{ color: "#66bb6a" }} />
+              <Palette sx={{ color: "primary.dark" }} />
             </ListItemIcon>
             <ListItemText
               primary="Tryb ciemny"
@@ -75,10 +75,10 @@ export default function SettingsScreen() {
               onChange={(e) => setDarkMode(e.target.checked)}
               sx={{
                 "& .MuiSwitch-switchBase.Mui-checked": {
-                  color: "#66bb6a",
+                  color: "primary.dark",
                 },
                 "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-                  backgroundColor: "#81c784",
+                  backgroundColor: "primary.main",
                 },
               }}
             />
@@ -91,7 +91,7 @@ export default function SettingsScreen() {
           <ListItem key="language" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Language sx={{ color: "#66bb6a" }} />
+                <Language sx={{ color: "primary.dark" }} />
               </ListItemIcon>
               <ListItemText primary="Język" secondary="Polski" />
             </ListItemButton>
@@ -100,7 +100,7 @@ export default function SettingsScreen() {
           <ListItem key="help" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Help sx={{ color: "#66bb6a" }} />
+                <Help sx={{ color: "primary.dark" }} />
               </ListItemIcon>
               <ListItemText
                 primary="Pomoc"
@@ -112,7 +112,7 @@ export default function SettingsScreen() {
           <ListItem key="about" disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <Info sx={{ color: "#66bb6a" }} />
+                <Info sx={{ color: "primary.dark" }} />
               </ListItemIcon>
               <ListItemText primary="O aplikacji" secondary="Wersja 1.0.0" />
             </ListItemButton>

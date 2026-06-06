@@ -65,7 +65,7 @@ export default function LeaderboardScreen() {
           sx={{
             width: 64,
             height: 64,
-            bgcolor: "#66bb6a",
+            bgcolor: "#primary.dark",
             fontSize: "1.5rem",
             fontWeight: "bold",
           }}
@@ -85,7 +85,11 @@ export default function LeaderboardScreen() {
               icon={<Leaderboard sx={{ color: "#ffa726 !important" }} />}
               label={`${userRank}`}
               size="small"
-              sx={{ bgcolor: "#ffffff", color: "#00a9e6", fontWeight: "bold" }}
+              sx={{
+                bgcolor: "background.paper",
+                color: "#00a9e6",
+                fontWeight: "bold",
+              }}
             />
           </Box>
         </Box>
@@ -98,11 +102,11 @@ export default function LeaderboardScreen() {
           onChange={(e, newValue) => setCurrentTab(newValue)}
           sx={{
             "& .MuiTab-root": {
-              color: "#81c784",
+              color: "#primary.main",
               fontWeight: "bold",
             },
             "& .Mui-selected": {
-              color: "#2e7d32",
+              color: "#primary.contrastText",
             },
           }}
         >
@@ -121,8 +125,8 @@ export default function LeaderboardScreen() {
               fullWidth
               sx={{
                 mb: 2,
-                bgcolor: "#66bb6a",
-                "&:hover": { bgcolor: "#4caf50" },
+                bgcolor: "#primary.dark",
+                "&:hover": { bgcolor: "text.secondary" },
                 borderRadius: 2,
                 py: 1.5,
                 fontWeight: "bold",
@@ -138,7 +142,8 @@ export default function LeaderboardScreen() {
                     <ListItem
                       sx={{
                         py: 1.5,
-                        bgcolor: user.rank <= 3 ? "#f1f8f4" : "transparent",
+                        bgcolor:
+                          user.rank <= 3 ? "background.default" : "transparent",
                       }}
                     >
                       <Box
@@ -160,7 +165,7 @@ export default function LeaderboardScreen() {
                                   ? "#bdbdbd"
                                   : user.rank === 3
                                     ? "#a1887f"
-                                    : "#81c784",
+                                    : "#primary.main",
                           }}
                         >
                           {user.rank}
@@ -169,7 +174,10 @@ export default function LeaderboardScreen() {
                       <ListItemAvatar>
                         <Avatar
                           sx={{
-                            bgcolor: user.rank <= 3 ? "#66bb6a" : "#a5d6a7",
+                            bgcolor:
+                              user.rank <= 3
+                                ? "#primary.dark"
+                                : "primary.light",
                             fontWeight: "bold",
                           }}
                         >
@@ -209,7 +217,8 @@ export default function LeaderboardScreen() {
                   <ListItem
                     sx={{
                       py: 1.5,
-                      bgcolor: user.rank <= 3 ? "#f1f8f4" : "transparent",
+                      bgcolor:
+                        user.rank <= 3 ? "#background.default" : "transparent",
                     }}
                   >
                     <Box
@@ -231,7 +240,7 @@ export default function LeaderboardScreen() {
                                 ? "#bdbdbd"
                                 : user.rank === 3
                                   ? "#a1887f"
-                                  : "#81c784",
+                                  : "#primary.main",
                         }}
                       >
                         {user.rank}
@@ -240,7 +249,8 @@ export default function LeaderboardScreen() {
                     <ListItemAvatar>
                       <Avatar
                         sx={{
-                          bgcolor: user.rank <= 3 ? "#66bb6a" : "#a5d6a7",
+                          bgcolor:
+                            user.rank <= 3 ? "#primary.dark" : "#primary.light",
                           fontWeight: "bold",
                         }}
                       >
