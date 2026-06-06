@@ -46,83 +46,57 @@ export default function MapScreen({
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    // Find user's location
-    const onLocationFound = (e: L.LocationEvent) => {
-      const radius = e.accuracy;
-
-      Geolocation.getCurrentPosition({ enableHighAccuracy: true })
-        .then((position) => {
-          console.log("Latitude:", position.coords.latitude);
-          console.log("Longitude:", position.coords.longitude);
-        })
-        .catch((error) => {
-          console.error("Geolocation error:", error);
-        });
-
-      L.marker(e.latlng)
-        .addTo(map)
-        .bindPopup(
-          `You are within ${Math.round(radius)} meters from this point`,
-        )
-        .openPopup();
-
-      L.circle(e.latlng, {
-        radius,
-        color: "#4285F4",
-        fillColor: "#4285F4",
-        fillOpacity: 0.15,
-      }).addTo(map);
-
-      // Optional: center map on user
-      map.setView(e.latlng, 17);
-    };
-
-    const onLocationError = (e: L.ErrorEvent) => {
-      console.error("Location error:", e.message);
-    };
-
-    map.on("locationfound", onLocationFound);
-    map.on("locationerror", onLocationError);
-
     map.on("click", () => {
       onMapClick();
     });
 
     // Request location
-    Geolocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 10000,
-      maximumAge: 0,
-    })
-      .then((pos) => {
-        const latlng = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        };
+    const initLocation = async () => {
+      try {
+        let perm = await Geolocation.checkPermissions();
+        if (perm.location !== "granted") {
+          perm = await Geolocation.requestPermissions();
+        }
 
-        const userLocationIcon = L.divIcon({
-          html: renderToStaticMarkup(
-            <RadioButtonChecked style={{ color: "#4285F4", fontSize: 32 }} />,
-          ),
-          className: "",
-          iconSize: [32, 32],
-          iconAnchor: [16, 16],
-        });
+        if (perm.location === "granted") {
+          const pos = await Geolocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+          });
 
-        L.marker(latlng, { icon: userLocationIcon }).addTo(map);
+          const latlng = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
 
-        L.circle(latlng, {
-          radius: pos.coords.accuracy,
-          color: "#4285F4",
-          fillColor: "#4285F4",
-          fillOpacity: 0.15,
-        }).addTo(map);
+          const userLocationIcon = L.divIcon({
+            html: renderToStaticMarkup(
+              <RadioButtonChecked style={{ color: "#4285F4", fontSize: 32 }} />,
+            ),
+            className: "",
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+          });
 
-        map.setView(latlng, 17);
-      })
-      .catch((err) => {
+          L.marker(latlng, { icon: userLocationIcon }).addTo(map);
+
+          L.circle(latlng, {
+            radius: pos.coords.accuracy,
+            color: "#4285F4",
+            fillColor: "#4285F4",
+            fillOpacity: 0.15,
+          }).addTo(map);
+
+          map.setView(latlng, 17);
+        } else {
+          console.error("User denied location permission");
+        }
+      } catch (err) {
         console.error("Geolocation failed:", err);
-      });
+      }
+    };
+    initLocation();
 
     // Add marker
     const customIcon = new L.DivIcon({
