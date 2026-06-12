@@ -19,6 +19,7 @@ import {
 } from "@mui/icons-material";
 import Points from "./icons/points.svg";
 import Goat from "./icons/goat.svg";
+import GoatHeadIcon from "./icons/goat-head.svg";
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import MapScreen from "./components/MapScreen";
@@ -267,7 +268,7 @@ export default function App(props: any) {
             <BottomNavigationAction value={"map"} icon={<Map />} />
             <BottomNavigationAction
               value={"gallery"}
-              icon={<Goat style={{ width: "24" }} />}
+              icon={<GoatHeadIcon style={{ width: "22" }} />}
             />
             <BottomNavigationAction value={"leaderboard"} icon={<People />} />
             <BottomNavigationAction value={"settings"} icon={<Settings />} />
