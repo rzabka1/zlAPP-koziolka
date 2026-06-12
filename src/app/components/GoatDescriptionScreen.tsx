@@ -164,7 +164,7 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
             flex: 1,
             height: 48,
             mb: 3,
-            bgcolor: "palette.primary.dark",
+            bgcolor: "primary.dark",
             "&:hover": { bgcolor: "text.secondary", color: "primary.light" },
             borderRadius: 0.5,
             fontWeight: "bold",

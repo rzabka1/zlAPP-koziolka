@@ -22,8 +22,9 @@ import Goat from "./icons/goat.svg";
 import GoatHeadIcon from "./icons/goat-head.svg";
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
-import ModeSelectScreen from './components/ModeSelectScreen';
+import ModeSelectScreen from "./components/ModeSelectScreen";
 import MapScreen from "./components/MapScreen";
+import HintScreen from "./components/HintScreen";
 import GalleryScreen from "./components/GalleryScreen";
 import LeaderboardScreen from "./components/LeaderboardScreen";
 import SettingsScreen from "./components/SettingsScreen";
@@ -32,6 +33,7 @@ import GoatPreviewCard from "./components/GoatPreviewCard";
 import { useAuth } from "./auth/AuthContext";
 import { StatusBar } from "@capacitor/status-bar";
 import { Capacitor } from "@capacitor/core";
+import { goats } from "./data/goats";
 
 const greenTheme = createTheme({
   palette: {
@@ -142,18 +144,26 @@ export default function App(props: any) {
   type AuthScreen = "login" | "register";
   const [authScreen, setAuthScreen] = useState<AuthScreen>("login");
   const [modeSelected, setModeSelected] = useState(false);
-  const [selectedMode, setSelectedMode] =
-      useState<'guide' | 'game' | null>(null);
+  const [selectedMode, setSelectedMode] = useState<"guide" | "game" | null>(
+    null,
+  );
+  type MapMode = "map" | "hint";
+  const [mapMode, setMapMode] = useState<MapMode>("map");
   const [currentTab, setCurrentTab] = useState<
     "map" | "gallery" | "leaderboard" | "settings"
   >("map");
+  const [hintIndex, setHintIndex] = useState(0);
+  const currentHintGoat = goats[hintIndex];
+  const goToNextGoat = () => {
+    setHintIndex((prev) => (prev + 1) % goats.length);
+  };
+  const goToPreviousGoat = () => {
+    setHintIndex((prev) => (prev - 1 + goats.length) % goats.length);
+  };
   const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
   const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
   const [counter, setCounter] = useState(20);
-  const activeTheme =
-      selectedMode === 'game'
-          ? redTheme
-          : greenTheme;
+  const activeTheme = selectedMode === "game" ? redTheme : greenTheme;
 
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -161,9 +171,23 @@ export default function App(props: any) {
     }
   }, []);
 
+  useEffect(() => {
+    if (selectedMode === "game") {
+      setMapMode("hint");
+      setHintIndex(0);
+    } else {
+      setMapMode("map");
+    }
+  }, [selectedMode]);
+
+  useEffect(() => {
+    setPreviewGoat(null);
+    setSelectedGoat(null);
+  }, [currentTab, selectedMode]);
+
   if (!isAuthenticated) {
     return (
-        <ThemeProvider theme={activeTheme}>
+      <ThemeProvider theme={activeTheme}>
         <CssBaseline />
 
         {authScreen === "login" ? (
@@ -177,16 +201,16 @@ export default function App(props: any) {
 
   if (!modeSelected) {
     return (
-        <ThemeProvider theme={activeTheme}>
-          <CssBaseline />
-          <ModeSelectScreen
-              onPreviewMode={(mode) => setSelectedMode(mode)}
-              onSelectMode={(mode) => {
-                setSelectedMode(mode);
-                setModeSelected(true);
-              }}
-          />
-        </ThemeProvider>
+      <ThemeProvider theme={activeTheme}>
+        <CssBaseline />
+        <ModeSelectScreen
+          onPreviewMode={(mode) => setSelectedMode(mode)}
+          onSelectMode={(mode) => {
+            setSelectedMode(mode);
+            setModeSelected(true);
+          }}
+        />
+      </ThemeProvider>
     );
   }
 
@@ -247,14 +271,21 @@ export default function App(props: any) {
               />
             ) : (
               <>
-                {currentTab === "map" && (
-                  <MapScreen
-                    onGoatClick={(goat) => {
-                      setPreviewGoat(goat);
-                    }}
-                    onMapClick={() => setPreviewGoat(null)}
-                  />
-                )}
+                {currentTab === "map" &&
+                  (mapMode === "map" ? (
+                    <MapScreen
+                      onGoatClick={(goat) => {
+                        setPreviewGoat(goat);
+                      }}
+                      onMapClick={() => setPreviewGoat(null)}
+                    />
+                  ) : (
+                    <HintScreen
+                      goat={currentHintGoat}
+                      onPrevious={goToPreviousGoat}
+                      onNext={goToNextGoat}
+                    />
+                  ))}
 
                 {currentTab === "gallery" && <GalleryScreen />}
                 {currentTab === "leaderboard" && <LeaderboardScreen />}
