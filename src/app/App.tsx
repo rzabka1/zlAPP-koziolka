@@ -22,6 +22,7 @@ import Goat from "./icons/goat.svg";
 import GoatHeadIcon from "./icons/goat-head.svg";
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
+import ModeSelectScreen from './components/ModeSelectScreen';
 import MapScreen from "./components/MapScreen";
 import GalleryScreen from "./components/GalleryScreen";
 import LeaderboardScreen from "./components/LeaderboardScreen";
@@ -140,12 +141,19 @@ export default function App(props: any) {
   const { isAuthenticated } = useAuth();
   type AuthScreen = "login" | "register";
   const [authScreen, setAuthScreen] = useState<AuthScreen>("login");
+  const [modeSelected, setModeSelected] = useState(false);
+  const [selectedMode, setSelectedMode] =
+      useState<'guide' | 'game' | null>(null);
   const [currentTab, setCurrentTab] = useState<
     "map" | "gallery" | "leaderboard" | "settings"
   >("map");
   const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
   const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
   const [counter, setCounter] = useState(20);
+  const activeTheme =
+      selectedMode === 'game'
+          ? redTheme
+          : greenTheme;
 
   useEffect(() => {
     if (Capacitor.isNativePlatform()) {
@@ -155,7 +163,7 @@ export default function App(props: any) {
 
   if (!isAuthenticated) {
     return (
-      <ThemeProvider theme={greenTheme}>
+        <ThemeProvider theme={activeTheme}>
         <CssBaseline />
 
         {authScreen === "login" ? (
@@ -167,9 +175,24 @@ export default function App(props: any) {
     );
   }
 
+  if (!modeSelected) {
+    return (
+        <ThemeProvider theme={activeTheme}>
+          <CssBaseline />
+          <ModeSelectScreen
+              onPreviewMode={(mode) => setSelectedMode(mode)}
+              onSelectMode={(mode) => {
+                setSelectedMode(mode);
+                setModeSelected(true);
+              }}
+          />
+        </ThemeProvider>
+    );
+  }
+
   return (
     <div {...props} style={{ height: "100%", width: "100%" }}>
-      <ThemeProvider theme={greenTheme}>
+      <ThemeProvider theme={activeTheme}>
         <CssBaseline />
         <Box
           sx={{
