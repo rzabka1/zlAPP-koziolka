@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { EmojiEvents, Leaderboard, Chat } from "@mui/icons-material";
 import Points from "../icons/points.svg";
+import { useAuth } from "../auth/AuthContext";
 
 const mockFriends = [
   { id: 1, name: "Imię Nazwisko", points: 28, avatar: "XX" },
@@ -36,6 +37,7 @@ const mockLeaderboard = [
 
 export default function LeaderboardScreen() {
   const [currentTab, setCurrentTab] = useState(0);
+  const { userName } = useAuth();
   const userPoints = 20;
   const userRank = 47;
 
@@ -72,7 +74,7 @@ export default function LeaderboardScreen() {
         ></Avatar>
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6" color="text.primary">
-            Twój Profil
+            {userName}
           </Typography>
           <Box sx={{ display: "flex", gap: 2, mt: 1, alignItems: "center" }}>
             <Chip

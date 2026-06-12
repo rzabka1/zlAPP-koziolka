@@ -19,12 +19,15 @@ import {
 } from "@mui/icons-material";
 import Points from "./icons/points.svg";
 import Goat from "./icons/goat.svg";
+import LoginScreen from "./components/LoginScreen";
+import RegisterScreen from "./components/RegisterScreen";
 import MapScreen from "./components/MapScreen";
 import GalleryScreen from "./components/GalleryScreen";
 import LeaderboardScreen from "./components/LeaderboardScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import GoatDescriptionScreen from "./components/GoatDescriptionScreen";
 import GoatPreviewCard from "./components/GoatPreviewCard";
+import { useAuth } from "./auth/AuthContext";
 import { StatusBar } from "@capacitor/status-bar";
 import { Capacitor } from "@capacitor/core";
 
@@ -133,6 +136,9 @@ const redTheme = createTheme({
 });
 
 export default function App(props: any) {
+  const { isAuthenticated } = useAuth();
+  type AuthScreen = "login" | "register";
+  const [authScreen, setAuthScreen] = useState<AuthScreen>("login");
   const [currentTab, setCurrentTab] = useState<
     "map" | "gallery" | "leaderboard" | "settings"
   >("map");
@@ -145,6 +151,20 @@ export default function App(props: any) {
       StatusBar.hide().catch(console.error);
     }
   }, []);
+
+  if (!isAuthenticated) {
+    return (
+      <ThemeProvider theme={greenTheme}>
+        <CssBaseline />
+
+        {authScreen === "login" ? (
+          <LoginScreen onGoToRegister={() => setAuthScreen("register")} />
+        ) : (
+          <RegisterScreen onGoToLogin={() => setAuthScreen("login")} />
+        )}
+      </ThemeProvider>
+    );
+  }
 
   return (
     <div {...props} style={{ height: "100%", width: "100%" }}>
