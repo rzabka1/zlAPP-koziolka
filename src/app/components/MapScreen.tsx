@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import { Box } from "@mui/material";
 import { RadioButtonChecked } from "@mui/icons-material";
 import Flag from "../icons/flag.svg";
+import FlagChecked from "../icons/flag-checked.svg"
 import { goats, Goat } from "../data/goats";
 
 interface Props {
@@ -99,7 +100,7 @@ export default function MapScreen({
     initLocation();
 
     // Add marker
-    const customIcon = new L.DivIcon({
+    const flagIcon = new L.DivIcon({
       html: renderToStaticMarkup(<Flag />),
       className: "",
       iconSize: [37, 61],
@@ -108,8 +109,19 @@ export default function MapScreen({
       shadowSize: [61, 61],
     });
 
+    const flagCheckedIcon = new L.DivIcon({
+      html: renderToStaticMarkup(<FlagChecked />),
+      className: "",
+      iconSize: [37, 61],
+      iconAnchor: [0, 61],
+      popupAnchor: [18, -67],
+      shadowSize: [61, 61],
+    });
+
     goats.forEach((goat) => {
-      L.marker(goat.position, { icon: customIcon })
+      const icon = goat.isCaught ? flagCheckedIcon : flagIcon;
+
+      L.marker(goat.position, { icon: icon })
         .addTo(map)
         .on("click", () => {
           onGoatClick?.(goat);

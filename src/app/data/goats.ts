@@ -71,7 +71,7 @@ export const goats: Goat[] = [
     photo: kryspinImg,
     audio: silence,
     position: [51.24656247477901, 22.56818896613974],
-    isCaught: false,
+    isCaught: true,
   },
   {
     id: "felicja",
@@ -85,7 +85,7 @@ export const goats: Goat[] = [
     photo: felicjaImg,
     audio: silence,
     position: [51.247171168736564, 22.567942064207706],
-    isCaught: false,
+    isCaught: true,
   },
 
   {
@@ -100,7 +100,7 @@ export const goats: Goat[] = [
     photo: tereskaImg,
     audio: silence,
     position: [51.247950906268244, 22.568976048429878],
-    isCaught: false,
+    isCaught: true,
   },
   {
     id: "mikolaj",
@@ -114,7 +114,7 @@ export const goats: Goat[] = [
     photo: mikolajImg,
     audio: silence,
     position: [51.2480950579797, 22.569495436535462],
-    isCaught: false,
+    isCaught: true,
   },
   {
     id: "leslaw",
@@ -128,7 +128,7 @@ export const goats: Goat[] = [
     photo: leslawImg,
     audio: silence,
     position: [51.248933089417044, 22.569398748787037],
-    isCaught: false,
+    isCaught: true,
   },
 
   {
