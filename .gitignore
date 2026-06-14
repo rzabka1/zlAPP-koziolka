@@ -2,4 +2,7 @@ node_modules/
 .idea/
 dist/
 build/
+android/
+capacitor.config.ts
+capacitor.config.json
 .env

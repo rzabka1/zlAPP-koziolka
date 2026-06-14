@@ -14,25 +14,25 @@ import {
   Divider,
   Chip,
 } from "@mui/material";
-import { EmojiEvents, Leaderboard, Chat } from "@mui/icons-material";
+import { EmojiEvents, Leaderboard, GroupAdd } from "@mui/icons-material";
 import Points from "../icons/points.svg";
 import { useAuth } from "../auth/AuthContext";
 
 const mockFriends = [
-  { id: 1, name: "Imię Nazwisko", points: 28, avatar: "XX" },
-  { id: 2, name: "Imię Nazwisko", points: 26, avatar: "XX" },
-  { id: 3, name: "Imię Nazwisko", points: 21, avatar: "XX" },
-  { id: 4, name: "Imię Nazwisko", points: 18, avatar: "XX" },
-  { id: 5, name: "Imię Nazwisko", points: 14, avatar: "XX" },
+  { id: 1, name: "kacper-bednarczuk", points: 28, rank: 1, avatar: "KB" },
+  { id: 2, name: "juleXbizuteria", points: 26, rank: 2, avatar: "JB" },
+  { id: 3, name: "ZbychuGaming", points: 21, rank: 3, avatar: "ZG" },
+  { id: 4, name: "jan.pawel", points: 18, rank: 4, avatar: "JP" },
+  { id: 5, name: "szczuras", points: 14, rank: 5, avatar: "SZ" },
 ];
 
 const mockLeaderboard = [
-  { id: 1, name: "Imię Nazwisko", points: 52, rank: 1, avatar: "XX" },
-  { id: 2, name: "Imię Nazwisko", points: 48, rank: 2, avatar: "XX" },
-  { id: 3, name: "Imię Nazwisko", points: 45, rank: 3, avatar: "XX" },
-  { id: 4, name: "Imię Nazwisko", points: 41, rank: 4, avatar: "XX" },
-  { id: 5, name: "Imię Nazwisko", points: 38, rank: 5, avatar: "XX" },
-  { id: 6, name: "Imię Nazwisko", points: 36, rank: 6, avatar: "XX" },
+  { id: 1, name: "GOAT", points: 52, rank: 1, avatar: "GO" },
+  { id: 2, name: "PanMirek", points: 48, rank: 2, avatar: "PM" },
+  { id: 3, name: "Agnieszka79", points: 45, rank: 3, avatar: "AG" },
+  { id: 4, name: "jaroPL", points: 41, rank: 4, avatar: "PL" },
+  { id: 5, name: "Kowalscy", points: 38, rank: 5, avatar: "KO" },
+  { id: 6, name: "maciejunio", points: 36, rank: 6, avatar: "MA" },
 ];
 
 export default function LeaderboardScreen() {
@@ -75,6 +75,9 @@ export default function LeaderboardScreen() {
           <Typography variant="h6" color="text.primary">
             {userName}
           </Typography>
+            <Typography variant="subtitle2" color="text.secondary">
+                Kod: 67692137
+            </Typography>
           <Box sx={{ display: "flex", gap: 2, mt: 1, alignItems: "center" }}>
             <Chip
               icon={<Points style={{ width: "12" }} />}
@@ -122,7 +125,7 @@ export default function LeaderboardScreen() {
           <Box>
             <Button
               variant="contained"
-              startIcon={<Chat />}
+              startIcon={<GroupAdd />}
               fullWidth
               sx={{
                 mb: 2,
@@ -133,11 +136,11 @@ export default function LeaderboardScreen() {
                 fontWeight: "bold",
               }}
             >
-              Czat
+              Dodaj znajomego
             </Button>
             <Paper elevation={1} sx={{ borderRadius: 2, overflow: "hidden" }}>
               <List sx={{ py: 0 }}>
-                {mockLeaderboard.map((user, index) => (
+                {mockFriends.map((user, index) => (
                   <Box key={user.id}>
                     {index > 0 && <Divider />}
                     <ListItem
