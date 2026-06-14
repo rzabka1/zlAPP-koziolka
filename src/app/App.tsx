@@ -153,7 +153,6 @@ export default function App(props: any) {
     "map" | "gallery" | "leaderboard" | "settings"
   >("map");
   const [hintIndex, setHintIndex] = useState(0);
-  const currentHintGoat = goats[hintIndex];
   const goToNextGoat = () => {
     setHintIndex((prev) => (prev + 1) % goats.length);
   };
@@ -162,7 +161,7 @@ export default function App(props: any) {
   };
   const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
   const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
-  const [counter, setCounter] = useState(20);
+  const { points } = useAuth();
   const activeTheme = selectedMode === "game" ? redTheme : greenTheme;
 
   useEffect(() => {
@@ -241,7 +240,7 @@ export default function App(props: any) {
               </IconButton>
               <Chip
                 icon={<Points style={{ width: "15" }} />}
-                label={counter}
+                label={`${points}`}
                 sx={{
                   bgcolor: "primary.light",
                   color: "primary.contrastText",
@@ -280,14 +279,20 @@ export default function App(props: any) {
                       onMapClick={() => setPreviewGoat(null)}
                     />
                   ) : (
-                    <HintScreen
-                      goat={currentHintGoat}
-                      onPrevious={goToPreviousGoat}
-                      onNext={goToNextGoat}
-                    />
+                      <HintScreen
+                          goatIndex={hintIndex}
+                          onPrevious={goToPreviousGoat}
+                          onNext={goToNextGoat}
+                      />
                   ))}
 
-                {currentTab === "gallery" && <GalleryScreen />}
+                {currentTab === "gallery" && (
+                    <GalleryScreen
+                        onGoatClick={(goat) => {
+                          setSelectedGoat(goat);
+                        }}
+                    />
+                )}
                 {currentTab === "leaderboard" && <LeaderboardScreen />}
                 {currentTab === "settings" && <SettingsScreen />}
 

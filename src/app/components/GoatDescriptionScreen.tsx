@@ -110,7 +110,7 @@ export default function GoatDescriptionScreen({ goat, onBack }: Props) {
           }}
         >
           <Points style={{ width: 15 }} />
-          <Typography>{goat.points}</Typography>
+          <Typography>{goat.pointsGuide}</Typography>
         </Box>
       </Box>
 

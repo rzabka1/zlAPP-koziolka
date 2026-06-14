@@ -61,7 +61,7 @@ export default function GoatPreviewCard({ goat, onOpen }: Props) {
           }}
         >
           <Points style={{ width: 15 }} />
-          <Typography>{goat.points}</Typography>
+          <Typography>{goat.pointsGuide}</Typography>
         </Box>
       </Box>
 

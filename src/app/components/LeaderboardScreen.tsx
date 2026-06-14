@@ -37,8 +37,7 @@ const mockLeaderboard = [
 
 export default function LeaderboardScreen() {
   const [currentTab, setCurrentTab] = useState(0);
-  const { userName } = useAuth();
-  const userPoints = 20;
+  const { userName, points } = useAuth();
   const userRank = 47;
 
   return (
@@ -79,7 +78,7 @@ export default function LeaderboardScreen() {
           <Box sx={{ display: "flex", gap: 2, mt: 1, alignItems: "center" }}>
             <Chip
               icon={<Points style={{ width: "12" }} />}
-              label={`${userPoints}`}
+              label={`${points}`}
               size="small"
               sx={{ bgcolor: "#fff3e0", color: "#e65100", fontWeight: "bold" }}
             />

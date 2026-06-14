@@ -1,12 +1,16 @@
 import {
-  Box,
+  Box, Card, CardActionArea,
   CardMedia,
   ImageList,
   ImageListItem,
   Paper,
   Typography,
 } from "@mui/material";
-import { goats } from "../data/goats";
+import {Goat, goats} from "../data/goats";
+
+type Props = {
+  onGoatClick: (goat: Goat) => void;
+};
 
 const imageData: { id: number; color: string }[] = [
   { id: 0, color: "primary.main" },
@@ -37,7 +41,7 @@ const imageData: { id: number; color: string }[] = [
   { id: 25, color: "primary.light" },
 ];
 
-export default function GalleryScreen() {
+export default function GalleryScreen({ onGoatClick }: Props) {
   return (
     <Box
       sx={{
@@ -60,67 +64,74 @@ export default function GalleryScreen() {
 
       <ImageList cols={2} gap={14}>
         {imageData.map((item) => (
-          <ImageListItem key={item.id}>
-            <Paper
-              elevation={3}
-              sx={{
-                borderRadius: 2,
-                overflow: "hidden", // IMPORTANT: clips image + prevents overflow
-                aspectRatio: "1",
-                display: "flex",
-                flexDirection: "column",
-                cursor: "pointer",
-                transition: "transform 0.15s ease",
-                "&:active": {
-                  transform: "scale(0.97)",
-                },
-              }}
-            >
-              {/* IMAGE SECTION */}
-              <Box
-                sx={{
-                  flex: 1, // takes all available space above text
-                  position: "relative",
-                  overflow: "hidden", // ensures clean edges
-                }}
-              >
-                <Box
-                  component="img"
-                  src={goats[item.id].photo}
-                  alt={goats[item.id].name}
+            <ImageListItem key={item.id}>
+              <Card
+                  elevation={3}
                   sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover", // key: fills area like wallpaper
-                    display: "block",
+                    borderRadius: 2,
+                    overflow: "hidden",
                   }}
-                />
-              </Box>
-
-              {/* TEXT SECTION */}
-              <Box
-                sx={{
-                  height: "30%",
-                  bgcolor: item.color,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  px: 1,
-                }}
               >
-                <Typography
-                  variant="body2"
-                  sx={{
-                    fontWeight: 600,
-                    color: "#background.paper",
-                    textAlign: "center",
-                  }}
+                <CardActionArea
+                    onClick={() => onGoatClick(goats[item.id])}
+                    sx={{
+                      aspectRatio: "1",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "stretch",
+                      userSelect: "none",
+                      WebkitTapHighlightColor: "transparent",
+                    }}
                 >
-                  {goats[item.id].name}
-                </Typography>
-              </Box>
-            </Paper>
-          </ImageListItem>
+                  {/* IMAGE SECTION */}
+                  <Box
+                      sx={{
+                        flex: 1,
+                        position: "relative",
+                        overflow: "hidden",
+                      }}
+                  >
+                    <Box
+                        component="img"
+                        src={goats[item.id].photo}
+                        alt={goats[item.id].name}
+                        draggable={false}
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                          userSelect: "none",
+                          WebkitUserDrag: "none",
+                        }}
+                    />
+                  </Box>
+
+                  {/* TEXT SECTION */}
+                  <Box
+                      sx={{
+                        height: "30%",
+                        bgcolor: item.color,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        px: 1,
+                      }}
+                  >
+                    <Typography
+                        variant="body2"
+                        sx={{
+                          fontWeight: 600,
+                          color: "background.paper",
+                          textAlign: "center",
+                        }}
+                    >
+                      {goats[item.id].name}
+                    </Typography>
+                  </Box>
+                </CardActionArea>
+              </Card>
+            </ImageListItem>
         ))}
       </ImageList>
     </Box>
