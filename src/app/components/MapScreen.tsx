@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import {Box} from "@mui/material";
 import {RadioButtonChecked} from "@mui/icons-material";
 import Flag from "../icons/flag.svg";
+import FlagSelected from "../icons/flag-selected.svg"
 import FlagChecked from "../icons/flag-checked.svg"
 import FlagStar from "../icons/flag-star.svg"
 import {Goat, goats} from "../data/goats";
@@ -111,10 +112,10 @@ export default function MapScreen({
 		});
 
 		const flagSelected = new L.DivIcon({
-			html: renderToStaticMarkup(<Flag/>),
+			html: renderToStaticMarkup(<FlagSelected/>),
 			className: "",
-			iconSize: [67, 121],
-			iconAnchor: [0, 60],
+			iconSize: [87, 141],
+			iconAnchor: [40, 75],
 			popupAnchor: [18, -67],
 			shadowSize: [61, 61],
 		});

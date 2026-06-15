@@ -31,7 +31,7 @@ export default function GoatPreviewCard({goat, onOpen}: Props) {
 					width: 48,
 					height: 48,
 
-					bgcolor: "primary.main",
+					bgcolor: "primary.contrastText",
 					boxShadow: 4,
 
 					color: "background.paper",
