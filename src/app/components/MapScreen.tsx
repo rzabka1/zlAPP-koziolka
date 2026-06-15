@@ -110,6 +110,15 @@ export default function MapScreen({
 			shadowSize: [61, 61],
 		});
 
+		const flagSelected = new L.DivIcon({
+			html: renderToStaticMarkup(<Flag/>),
+			className: "",
+			iconSize: [67, 121],
+			iconAnchor: [0, 60],
+			popupAnchor: [18, -67],
+			shadowSize: [61, 61],
+		});
+
 		const flagCheckedIcon = new L.DivIcon({
 			html: renderToStaticMarkup(<FlagChecked/>),
 			className: "",
@@ -128,7 +137,16 @@ export default function MapScreen({
 		});
 
 		goats.forEach((goat) => {
-			const icon = goat.isCaught ? flagCheckedIcon : flagIcon;
+			let icon;
+
+			if (goat.id === "wiktoria") {
+				icon = flagSelected;
+			} else {
+				icon = goat.isCaught
+					? flagCheckedIcon
+					: flagIcon;
+			}
+
 
 			L.marker(goat.position, {icon: icon})
 				.addTo(map)
