@@ -135,7 +135,7 @@ export default function GoatDescriptionScreen({goat, onBack}: Props) {
 					>
 						<CallSplit sx={{color: "palette.primary.dark", fontSize: 24}}/>
 						<Typography variant="body1" color="text.primary">
-							(dystans)
+							52m
 						</Typography>
 					</Box>
 				</Box>

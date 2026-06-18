@@ -108,7 +108,7 @@ export default function GoatPreviewCard({goat, onOpen}: Props) {
 						}}
 					>
 						<CallSplit fontSize="small"/>
-						<Typography variant="body2">(dystans)</Typography>
+						<Typography variant="body2">52m</Typography>
 					</Box>
 				</Box>
 
