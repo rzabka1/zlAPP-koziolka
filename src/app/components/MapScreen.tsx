@@ -26,6 +26,7 @@ export default function MapScreen({
 }) {
 	const mapRef = useRef<HTMLDivElement>(null);
 	const mapInstanceRef = useRef<L.Map | null>(null);
+	const selectedMarkerRef = useRef<L.Marker | null>(null);
 
 	useEffect(() => {
 		if (!mapRef.current || mapInstanceRef.current) return;
@@ -138,22 +139,33 @@ export default function MapScreen({
 		});
 
 		goats.forEach((goat) => {
-			let icon;
+			const normalIcon = goat.isCaught
+				? flagCheckedIcon
+				: flagIcon;
 
-			if (goat.id === "wiktoria") {
-				icon = flagSelected;
-			} else {
-				icon = goat.isCaught
-					? flagCheckedIcon
-					: flagIcon;
-			}
+			const marker = L.marker(goat.position, {icon: normalIcon}).addTo(map);
 
+			(marker.options as any).goat = goat;
 
-			L.marker(goat.position, {icon: icon})
-				.addTo(map)
-				.on("click", () => {
-					onGoatClick?.(goat);
-				});
+			marker.on("click", () => {
+				// restore previous
+				if (
+					selectedMarkerRef.current &&
+					selectedMarkerRef.current !== marker
+				) {
+					const previousGoat = (selectedMarkerRef.current.options as any).goat as Goat;
+
+					selectedMarkerRef.current.setIcon(
+						previousGoat.isCaught ? flagCheckedIcon : flagIcon
+					);
+				}
+
+				// select new
+				marker.setIcon(flagSelected);
+				selectedMarkerRef.current = marker;
+
+				onGoatClick?.(goat);
+			});
 		});
 
 		// Muzeum Narodowe Zamek
