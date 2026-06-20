@@ -53,6 +53,21 @@ export default function MapScreen({
 
 		map.on("click", () => {
 			onMapClick();
+
+			const previousMarker = selectedMarkerRef.current;
+			if (!previousMarker) return;
+
+			const previousGoat = (previousMarker.options as any).goat as Goat;
+
+			previousMarker.setIcon(
+				previousGoat.isCaught ? flagCheckedIcon : flagIcon
+			);
+
+			requestAnimationFrame(() => {
+				shrinkMarker(previousMarker);
+			});
+
+			selectedMarkerRef.current = null;
 		});
 
 		// Request location
