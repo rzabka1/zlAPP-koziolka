@@ -1,14 +1,14 @@
 import {useEffect, useState} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {
-  AppBar,
-  BottomNavigation,
-  BottomNavigationAction,
-  Box,
-  Chip,
-  CssBaseline,
-  IconButton,
-  Toolbar,
+	AppBar,
+	BottomNavigation,
+	BottomNavigationAction,
+	Box,
+	Chip,
+	CssBaseline,
+	IconButton,
+	Toolbar,
 } from "@mui/material";
 import {Accessibility, Map, People, QuestionMark, Settings,} from "@mui/icons-material";
 import Points from "./icons/points.svg";
@@ -24,6 +24,7 @@ import LeaderboardScreen from "./components/LeaderboardScreen";
 import SettingsScreen from "./components/SettingsScreen";
 import GoatDescriptionScreen from "./components/GoatDescriptionScreen";
 import GoatPreviewCard from "./components/GoatPreviewCard";
+import PlaceDescriptionScreen from "./components/PlaceDescriptionScreen";
 import {useAuth} from "./auth/AuthContext";
 import {StatusBar} from "@capacitor/status-bar";
 import {Capacitor} from "@capacitor/core";
@@ -158,6 +159,8 @@ export default function App(props: any) {
 	const {points} = useAuth();
 	const activeTheme = selectedMode === "game" ? redTheme : greenTheme;
 
+	const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
+
 	useEffect(() => {
 		if (Capacitor.isNativePlatform()) {
 			StatusBar.hide().catch(console.error);
@@ -262,6 +265,11 @@ export default function App(props: any) {
 								goat={selectedGoat}
 								onBack={() => setSelectedGoat(null)}
 							/>
+						) : selectedPlace ? (
+							<PlaceDescriptionScreen
+								place={selectedPlace}
+								onBack={() => setSelectedPlace(null)}
+							/>
 						) : (
 							<>
 								{currentTab === "map" &&
@@ -271,6 +279,7 @@ export default function App(props: any) {
 												setPreviewGoat(goat);
 											}}
 											onMapClick={() => setPreviewGoat(null)}
+											onPlaceClick={(place) => setSelectedPlace(place)}
 										/>
 									) : (
 										<HintScreen

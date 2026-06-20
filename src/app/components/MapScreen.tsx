@@ -12,17 +12,21 @@ import FlagCheckedSelected from "../icons/flag-checked-selected.svg";
 import FlagChecked from "../icons/flag-checked.svg"
 import FlagStar from "../icons/flag-star.svg"
 import {Goat, goats} from "../data/goats";
+import {Place, places} from "../data/places";
 
 interface Props {
 	onGoatClick: (goat: Goat) => void;
 	onMapClick: () => void;
+	onPlaceClick: (place: Place) => void;
 }
 
 export default function MapScreen({
 	                                  onGoatClick,
 	                                  onMapClick,
+	                                  onPlaceClick,
                                   }: {
 	onGoatClick?: (goat: Goat) => void;
+	onPlaceClick?: (place: Place) => void;
 	onMapClick?: () => void;
 }) {
 	const mapRef = useRef<HTMLDivElement>(null);
@@ -268,35 +272,42 @@ export default function MapScreen({
 			});
 		});
 
-		// Muzeum Narodowe Zamek
-		L.marker(
-			[51.250425116739784, 22.572426324244525],
-			{icon: flagStarIcon}
-		).addTo(map);
+		places.forEach((place) => {
+			const marker = L.marker(place.position, {
+				icon: flagStarIcon,
+			}).addTo(map);
 
-		// Muzeum Czechowicza
-		L.marker(
-			[51.24784881973207, 22.56908346154913],
-			{icon: flagStarIcon}
-		).addTo(map);
+			(marker.options as any).place = place;
 
-		// Wieża Trynitarska
-		L.marker(
-			[51.24707998172064, 22.568065390261616],
-			{icon: flagStarIcon}
-		).addTo(map);
+			marker.on("click", () => {
+				onPlaceClick?.(place);
+			});
+		});
 
-		// Muzeum Historii Miasta Lublina (Brama Krakowska)
-		L.marker(
-			[51.24742607529606, 22.56658376518769],
-			{icon: flagStarIcon}
-		).addTo(map);
-
-		// // Lubelska Trasa Podziemna
+		// // Muzeum Narodowe Zamek
 		// L.marker(
-		// 	[51.247759489925706, 22.56784840613228],
+		// 	[51.250425116739784, 22.572426324244525],
 		// 	{icon: flagStarIcon}
 		// ).addTo(map);
+		//
+		// // Muzeum Czechowicza
+		// L.marker(
+		// 	[51.24784881973207, 22.56908346154913],
+		// 	{icon: flagStarIcon}
+		// ).addTo(map);
+		//
+		// // Wieża Trynitarska
+		// L.marker(
+		// 	[51.24707998172064, 22.568065390261616],
+		// 	{icon: flagStarIcon}
+		// ).addTo(map);
+		//
+		// // Muzeum Historii Miasta Lublina (Brama Krakowska)
+		// L.marker(
+		// 	[51.24742607529606, 22.56658376518769],
+		// 	{icon: flagStarIcon}
+		// ).addTo(map);
+
 
 		// Cleanup
 		return () => {
