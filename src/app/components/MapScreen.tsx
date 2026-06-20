@@ -8,6 +8,7 @@ import {Box} from "@mui/material";
 import {RadioButtonChecked} from "@mui/icons-material";
 import Flag from "../icons/flag.svg";
 import FlagSelected from "../icons/flag-selected.svg"
+import FlagCheckedSelected from "../icons/flag-checked-selected.svg";
 import FlagChecked from "../icons/flag-checked.svg"
 import FlagStar from "../icons/flag-star.svg"
 import {Goat, goats} from "../data/goats";
@@ -104,7 +105,11 @@ export default function MapScreen({
 
 		// Add marker
 		const flagIcon = new L.DivIcon({
-			html: renderToStaticMarkup(<Flag/>),
+			html: renderToStaticMarkup(
+				<div className="flag-content">
+					<Flag/>
+				</div>
+			),
 			className: "",
 			iconSize: [37, 61],
 			iconAnchor: [0, 61],
@@ -113,30 +118,92 @@ export default function MapScreen({
 		});
 
 		const flagSelected = new L.DivIcon({
-			html: renderToStaticMarkup(<FlagSelected/>),
+			html: renderToStaticMarkup(
+				<div className="flag-content">
+					<FlagSelected/>
+				</div>
+			),
 			className: "",
 			iconSize: [87, 141],
-			iconAnchor: [40, 75],
+			iconAnchor: [16, 110],
 			popupAnchor: [18, -67],
 			shadowSize: [61, 61],
 		});
 
 		const flagCheckedIcon = new L.DivIcon({
-			html: renderToStaticMarkup(<FlagChecked/>),
+			html: renderToStaticMarkup(
+				<div className="flag-content">
+					<FlagChecked/>
+				</div>
+			),
 			className: "",
 			iconSize: [37, 61],
 			iconAnchor: [0, 61],
 			popupAnchor: [18, -67],
 			shadowSize: [61, 61],
 		});
+
+		const flagCheckedSelected = new L.DivIcon({
+			html: renderToStaticMarkup(
+				<div className="flag-content">
+					<FlagCheckedSelected/>
+				</div>
+			),
+			className: "",
+			iconSize: [87, 141],
+			iconAnchor: [16, 110],
+			popupAnchor: [18, -67],
+			shadowSize: [61, 61],
+		});
+
 		const flagStarIcon = new L.DivIcon({
-			html: renderToStaticMarkup(<FlagStar/>),
+			html: renderToStaticMarkup(
+				<div className="flag-content">
+					<FlagStar/>
+				</div>
+			),
 			className: "",
 			iconSize: [37, 61],
 			iconAnchor: [0, 61],
 			popupAnchor: [18, -67],
 			shadowSize: [61, 61],
 		});
+
+		function bounceMarker(marker: L.Marker) {
+			const wrapper = marker.getElement()?.querySelector(".flag-content") as HTMLElement;
+
+			if (!wrapper) return;
+
+			wrapper.animate(
+				[
+					{transform: "translateY(0) scale(1)"},
+					{transform: "translateY(-10px) scale(1.18)", offset: 0.35},
+					{transform: "translateY(0) scale(0.96)", offset: 0.7},
+					{transform: "translateY(0) scale(1)"},
+				],
+				{
+					duration: 1220,
+					easing: "cubic-bezier(.2, 1.6, .3, 1)",
+				}
+			);
+		}
+
+		function shrinkMarker(marker: L.Marker) {
+			const wrapper = marker.getElement()?.querySelector(".flag-content") as HTMLElement;
+
+			if (!wrapper) return;
+
+			wrapper.animate(
+				[
+					{transform: "scale(1.15)"},
+					{transform: "scale(1)"}
+				],
+				{
+					duration: 620,
+					easing: "cubic-bezier(.2, .9, .2, 1)"
+				}
+			);
+		}
 
 		goats.forEach((goat) => {
 			const normalIcon = goat.isCaught
@@ -148,20 +215,38 @@ export default function MapScreen({
 			(marker.options as any).goat = goat;
 
 			marker.on("click", () => {
-				// restore previous
 				if (
 					selectedMarkerRef.current &&
 					selectedMarkerRef.current !== marker
 				) {
-					const previousGoat = (selectedMarkerRef.current.options as any).goat as Goat;
+					const previousMarker = selectedMarkerRef.current;
+					const previousGoat = (previousMarker.options as any).goat as Goat;
 
-					selectedMarkerRef.current.setIcon(
+					previousMarker.setIcon(
 						previousGoat.isCaught ? flagCheckedIcon : flagIcon
 					);
+
+					map.flyTo(marker.getLatLng(), map.getZoom(), {
+						duration: 0.2,
+					});
+
+					requestAnimationFrame(() => {
+						shrinkMarker(previousMarker);
+					});
 				}
 
-				// select new
-				marker.setIcon(flagSelected);
+				const currentGoat = goat;
+
+				const selectedIcon = currentGoat.isCaught
+					? flagCheckedSelected
+					: flagSelected;
+
+				marker.setIcon(selectedIcon);
+
+				requestAnimationFrame(() => {
+					bounceMarker(marker);
+				});
+
 				selectedMarkerRef.current = marker;
 
 				onGoatClick?.(goat);
