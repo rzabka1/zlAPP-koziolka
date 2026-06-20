@@ -29,6 +29,7 @@ import {useAuth} from "./auth/AuthContext";
 import {StatusBar} from "@capacitor/status-bar";
 import {Capacitor} from "@capacitor/core";
 import {goats} from "./data/goats";
+import {Place} from "./data/places";
 
 const greenTheme = createTheme({
 	palette: {
@@ -134,6 +135,92 @@ const redTheme = createTheme({
 	},
 });
 
+const accessibilityTheme = createTheme({
+	palette: {
+		primary: {
+			main: "#000000",
+			light: "#000000",
+			dark: "#ffdd00",
+			contrastText: "#09b5cb",
+		},
+
+		secondary: {
+			main: "#09b5cb",
+		},
+
+		background: {
+			default: "#000000",
+			paper: "#000000",
+		},
+
+		text: {
+			primary: "#ffdd00",
+			secondary: "#ffdd00",
+		},
+	},
+
+	shape: {
+		borderRadius: 16,
+	},
+
+	components: {
+		MuiBottomNavigation: {
+			styleOverrides: {
+				root: {
+					backgroundColor: "#000000",
+					borderTop: "1px solid #f0caca",
+				},
+			},
+		},
+
+		MuiBottomNavigationAction: {
+			styleOverrides: {
+				root: {
+					color: "#ffdd00",
+
+					"&.Mui-selected": {
+						color: "#09b5cb",
+					},
+				},
+			},
+		},
+
+		MuiOutlinedInput: {
+			styleOverrides: {
+				root: {
+					color: "#ffdd00",
+
+					"& .MuiOutlinedInput-notchedOutline": {
+						borderColor: "#ffdd00",
+						borderWidth: 2,
+					},
+
+					"&:hover .MuiOutlinedInput-notchedOutline": {
+						borderColor: "#09b5cb",
+					},
+
+					"&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+						borderColor: "#09b5cb",
+						borderWidth: 3,
+					},
+				},
+			},
+		},
+
+		MuiInputLabel: {
+			styleOverrides: {
+				root: {
+					color: "#ffdd00",
+
+					"&.Mui-focused": {
+						color: "#09b5cb",
+					},
+				},
+			},
+		},
+	}
+});
+
 export default function App(props: any) {
 	const {isAuthenticated} = useAuth();
 	type AuthScreen = "login" | "register";
@@ -157,7 +244,15 @@ export default function App(props: any) {
 	const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
 	const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
 	const {points} = useAuth();
-	const activeTheme = selectedMode === "game" ? redTheme : greenTheme;
+
+	const [isAccessibilityMode, setIsAccessibilityMode] = useState(false);
+
+	const activeTheme =
+		isAccessibilityMode
+			? accessibilityTheme
+			: selectedMode === "game"
+				? redTheme
+				: greenTheme;
 
 	const [selectedPlace, setSelectedPlace] = useState<Place | null>(null);
 
@@ -187,9 +282,19 @@ export default function App(props: any) {
 				<CssBaseline/>
 
 				{authScreen === "login" ? (
-					<LoginScreen onGoToRegister={() => setAuthScreen("register")}/>
+					<LoginScreen
+						onGoToRegister={() => setAuthScreen("register")}
+						onAccessibilityClick={() =>
+							setIsAccessibilityMode((prev) => !prev)
+						}
+					/>
 				) : (
-					<RegisterScreen onGoToLogin={() => setAuthScreen("login")}/>
+					<RegisterScreen
+						onGoToLogin={() => setAuthScreen("login")}
+						onAccessibilityClick={() =>
+							setIsAccessibilityMode((prev) => !prev)
+						}
+					/>
 				)}
 			</ThemeProvider>
 		);
@@ -247,7 +352,12 @@ export default function App(props: any) {
 									minWidth: "70px",
 								}}
 							/>
-							<IconButton edge="end" color="inherit" aria-label="accessibility">
+							<IconButton
+								edge="end"
+								color={isAccessibilityMode ? "secondary" : "inherit"}
+								aria-label="accessibility"
+								onClick={() => setIsAccessibilityMode((prev) => !prev)}
+							>
 								<Accessibility/>
 							</IconButton>
 						</Toolbar>
