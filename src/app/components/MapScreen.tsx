@@ -254,9 +254,9 @@ export default function MapScreen({
 					});
 				}
 
-				const currentGoat = goat;
+				// const currentGoat = goat;
 
-				const selectedIcon = currentGoat.isCaught
+				const selectedIcon = goat.isCaught
 					? flagCheckedSelected
 					: flagSelected;
 

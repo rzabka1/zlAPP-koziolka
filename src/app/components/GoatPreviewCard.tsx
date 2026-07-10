@@ -6,9 +6,10 @@ import Points from "../icons/points.svg";
 interface Props {
 	goat: Goat;
 	onOpen: () => void;
+	onCatch: (goat: Goat) => void;
 }
 
-export default function GoatPreviewCard({goat, onOpen}: Props) {
+export default function GoatPreviewCard({goat, onOpen, onCatch}: Props) {
 	return (<Box
 			sx={{
 				position: "absolute",
@@ -163,7 +164,7 @@ export default function GoatPreviewCard({goat, onOpen}: Props) {
 							startIcon={<CenterFocusWeak/>}
 							onClick={(e) => {
 								e.stopPropagation();
-								// TODO: add catch logic
+								onCatch(goat);
 							}}
 							sx={{
 								flex: 1,

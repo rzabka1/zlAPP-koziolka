@@ -46,20 +46,14 @@ export default function PlaceDescriptionScreen({place, onBack}: Props) {
 		>
 			<Box
 				sx={{
-					position: "relative",
-					p: 2,
-					display: "flex",
-					justifyContent: "center",
+					display: "grid",
+					gridTemplateColumns: "48px 1fr 48px",
 					alignItems: "center",
+					gap: 1,
+					p: 2,
 				}}
 			>
-				<IconButton
-					onClick={onBack}
-					sx={{
-						position: "absolute",
-						left: 16,
-					}}
-				>
+				<IconButton onClick={onBack}>
 					<ArrowBack/>
 				</IconButton>
 
@@ -68,11 +62,14 @@ export default function PlaceDescriptionScreen({place, onBack}: Props) {
 					sx={{
 						fontWeight: "bold",
 						textAlign: "center",
+						lineHeight: 1.2,
+						wordBreak: "break-word",
 					}}
 				>
 					{place.name}
 				</Typography>
 
+				<Box/>
 			</Box>
 
 			<Box sx={{flex: 1, overflow: "auto", px: 2, pb: 2}}>

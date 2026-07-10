@@ -19,7 +19,7 @@ export const places: Place[] = [
 		id: "zamek",
 		name: "Zamek Lubelski – Muzeum Narodowe w Lublinie",
 		address: "ul. Zamkowa 9",
-		description: "Jeden z najbardziej rozpoznawalnych zabytków Lublina i obowiązkowy punkt każdej wizyty w mieście. W jego wnętrzach mieści się Muzeum Narodowe z bogatymi zbiorami sztuki i historii, a prawdziwą perełką jest średniowieczna Kaplica Trójcy Świętej ze słynnymi bizantyjsko-ruskimi freskami.",
+		description: "Jeden z najbardziej rozpoznawalnych zabytków Lublina i obowiązkowy punkt każdej wizyty w mieście. W jego wnętrzach mieści się Muzeum Narodowe z bogatymi zbiorami sztuki i historii, a prawdziwą perełką jest średniowieczna Kaplica Trójcy Świętej ze słynnymi freskami.",
 		photo: zamek,
 		audio: silence,
 		position: [51.250425116739784, 22.572426324244525],

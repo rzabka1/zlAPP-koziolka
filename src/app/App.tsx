@@ -1,15 +1,6 @@
 import {useEffect, useState} from "react";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
-import {
-	AppBar,
-	BottomNavigation,
-	BottomNavigationAction,
-	Box,
-	Chip,
-	CssBaseline,
-	IconButton,
-	Toolbar,
-} from "@mui/material";
+import {AppBar, BottomNavigation, BottomNavigationAction, Box, CssBaseline, IconButton, Toolbar,} from "@mui/material";
 import {Accessibility, Map, People, QuestionMark, Settings,} from "@mui/icons-material";
 import Points from "./icons/points.svg";
 import Goat from "./icons/goat.svg";
@@ -25,6 +16,7 @@ import SettingsScreen from "./components/SettingsScreen";
 import GoatDescriptionScreen from "./components/GoatDescriptionScreen";
 import GoatPreviewCard from "./components/GoatPreviewCard";
 import PlaceDescriptionScreen from "./components/PlaceDescriptionScreen";
+import CatchScreen from "./components/CatchScreen";
 import {useAuth} from "./auth/AuthContext";
 import {StatusBar} from "@capacitor/status-bar";
 import {Capacitor} from "@capacitor/core";
@@ -243,7 +235,8 @@ export default function App(props: any) {
 	};
 	const [selectedGoat, setSelectedGoat] = useState<Goat | null>(null);
 	const [previewGoat, setPreviewGoat] = useState<Goat | null>(null);
-	const {points} = useAuth();
+	const [catchGoat, setCatchGoat] = useState<Goat | null>(null);
+	const {points, caughtGoats, addPoints, addGoat} = useAuth();
 
 	const [isAccessibilityMode, setIsAccessibilityMode] = useState(false);
 
@@ -340,18 +333,43 @@ export default function App(props: any) {
 							<IconButton edge="start" color="inherit">
 								<QuestionMark/>
 							</IconButton>
-							<Chip
-								icon={<Points style={{width: "15"}}/>}
-								label={`${points}`}
+							<Box
 								sx={{
+									display: "flex",
+									alignItems: "center",
+									gap: 3,
+									px: 1.5,
+									py: 0.5,
+									borderRadius: 999,
 									bgcolor: "primary.light",
 									color: "primary.contrastText",
 									fontWeight: "bold",
 									fontSize: "1rem",
-									height: "32px",
-									minWidth: "70px",
+									minHeight: 32,
 								}}
-							/>
+							>
+								<Box
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										gap: 0.75,
+									}}
+								>
+									<GoatHeadIcon style={{width: 20, height: 20}}/>
+									<span>{caughtGoats} / {goats.length}</span>
+								</Box>
+
+								<Box
+									sx={{
+										display: "flex",
+										alignItems: "center",
+										gap: 0.5,
+									}}
+								>
+									<Points style={{width: 18, height: 18}}/>
+									<span>{points}</span>
+								</Box>
+							</Box>
 							<IconButton
 								edge="end"
 								color={isAccessibilityMode ? "secondary" : "inherit"}
@@ -374,6 +392,18 @@ export default function App(props: any) {
 							<GoatDescriptionScreen
 								goat={selectedGoat}
 								onBack={() => setSelectedGoat(null)}
+							/>
+						) : catchGoat ? (
+							<CatchScreen
+								goat={catchGoat}
+								onBack={() => setCatchGoat(null)}
+								onCaught={(goat) => {
+									goat.isCaught = true;
+									addPoints(goat.pointsGuide);
+									addGoat(1);
+									setCatchGoat(null);
+									setSelectedGoat(goat);
+								}}
 							/>
 						) : selectedPlace ? (
 							<PlaceDescriptionScreen
@@ -414,6 +444,10 @@ export default function App(props: any) {
 										goat={previewGoat}
 										onOpen={() => {
 											setSelectedGoat(previewGoat);
+											setPreviewGoat(null);
+										}}
+										onCatch={(goat) => {
+											setCatchGoat(goat);
 											setPreviewGoat(null);
 										}}
 									/>

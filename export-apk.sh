@@ -25,8 +25,8 @@ npx cap init "${APP_NAME}" "${APP_ID}" --web-dir "${WEB_DIR}"
 echo "[INFO] Generating Android project structure..."
 npx cap add android
 
-echo "[INFO] Injecting Android Location permissions..."
-sed -i '/<\/manifest>/i \    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />\n    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n    <uses-feature android:name="android.hardware.location.gps" />' android/app/src/main/AndroidManifest.xml
+echo "[INFO] Injecting Android Location and Camera permissions..."
+sed -i '/<\/manifest>/i \    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />\n    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />\n    <uses-feature android:name="android.hardware.location.gps" />\n    <uses-permission android:name="android.permission.CAMERA" /> />' android/app/src/main/AndroidManifest.xml
 
 npx cap sync android
 

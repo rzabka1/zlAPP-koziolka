@@ -1,30 +1,30 @@
 import {useState} from "react";
 import {
-    Avatar,
-    Box,
-    Button,
-    Chip,
-    Divider,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Paper,
-    Tab,
-    Tabs,
-    Typography,
+	Avatar,
+	Box,
+	Button,
+	Chip,
+	Divider,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Paper,
+	Tab,
+	Tabs,
+	Typography,
 } from "@mui/material";
 import {EmojiEvents, GroupAdd, Leaderboard} from "@mui/icons-material";
 import Points from "../icons/points.svg";
 import {useAuth} from "../auth/AuthContext";
 
 const mockFriends = [
-	{id: 1, name: "kacper-bednarczuk", points: 22, rank: 1, avatar: "KB"},
-	{id: 2, name: "juleXbizuteria", points: 16, rank: 2, avatar: "JB"},
+	{id: 1, name: "JuliaT", points: 10, rank: 1, avatar: "JT"},
+	{id: 2, name: "kacper-b", points: 8, rank: 2, avatar: "KB"},
 	// {id: 3, name: "ZbychuGaming", points: 21, rank: 3, avatar: "ZG"},
-	{id: 3, name: "JuliaT", points: 10, rank: 3, avatar: "JT"},
-	{id: 4, name: "jan.pawel", points: 8, rank: 4, avatar: "JP"},
-	{id: 5, name: "szczuras", points: 2, rank: 5, avatar: "SZ"},
+	{id: 3, name: "szczuras", points: 6, rank: 3, avatar: "SZ"},
+	{id: 4, name: "jan.pawel", points: 4, rank: 4, avatar: "JP"},
+	{id: 5, name: "dzepetto", points: 2, rank: 5, avatar: "DZ"},
 ];
 
 const mockLeaderboard = [
@@ -40,6 +40,15 @@ export default function LeaderboardScreen() {
 	const [currentTab, setCurrentTab] = useState(0);
 	const {userName, points} = useAuth();
 	const userRank = 47;
+
+	const mockFriends = [
+		{id: 1, name: userName, points: points, rank: 1, avatar: "JT"},
+		{id: 2, name: "kacper-b", points: 8, rank: 2, avatar: "KB"},
+		// {id: 3, name: "ZbychuGaming", points: 21, rank: 3, avatar: "ZG"},
+		{id: 3, name: "szczuras", points: 6, rank: 3, avatar: "SZ"},
+		{id: 4, name: "jan.pawel", points: 4, rank: 4, avatar: "JP"},
+		{id: 5, name: "dzepetto", points: 2, rank: 5, avatar: "DZ"},
+	];
 
 	return (
 		<Box

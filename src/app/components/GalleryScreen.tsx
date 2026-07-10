@@ -45,16 +45,16 @@ export default function GalleryScreen({onGoatClick}: Props) {
 				p: 2,
 			}}
 		>
-			<Typography
-				variant="h6"
-				sx={{
-					fontWeight: "bold",
-					textAlign: "center",
-					mb: 2,
-				}}
-			>
-				Złapane Koziołki: 5/26
-			</Typography>
+			{/*<Typography*/}
+			{/*	variant="h6"*/}
+			{/*	sx={{*/}
+			{/*		fontWeight: "bold",*/}
+			{/*		textAlign: "center",*/}
+			{/*		mb: 2,*/}
+			{/*	}}*/}
+			{/*>*/}
+			{/*	Złapane Koziołki: 5/26*/}
+			{/*</Typography>*/}
 
 			<ImageList cols={2} gap={14}>
 				{imageData.map((item) => {

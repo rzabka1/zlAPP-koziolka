@@ -1,0 +1,9 @@
+body.barcode-scanner-active {
+    background: transparent !important;
+}
+
+html.barcode-scanner-active,
+body.barcode-scanner-active,
+#root.barcode-scanner-active {
+    background: transparent !important;
+}
